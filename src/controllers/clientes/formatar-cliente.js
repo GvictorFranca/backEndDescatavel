@@ -12,7 +12,7 @@ const formatarCliente = (dadosChecados) => {
 			clienteId: dado.cliente_id,
 			nome: dado.cliente_nome,
 			email: dado.cliente_email,
-			cobrancasFeitas: (parseFloat(dado.cobrancas_aguardando) || 0) + (parseFloat(dado.cobrancas_inadimplentes) || 0),
+			cobrancasFeitas: (parseFloat(dado.cobrancas_aguardando || 0)) + (parseFloat(dado.cobrancas_inadimplentes || 0) ),
 			cobrancasRecebidas: parseFloat(dado.cobrancas_recebidas || 0),
 			estaInadimplente: parseFloat(dado.cobrancas_inadimplentes) > 0,
 		});
