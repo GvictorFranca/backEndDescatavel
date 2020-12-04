@@ -89,6 +89,53 @@ const buscarClientesSemTexto = async (usuarioId, clientesPorPagina, offset) => {
 	return result.rows;
 };
 
+const buscarClientesSemCobrancasPorTexto = async (
+	usuarioId,
+	texto,
+	clientesPorPagina,
+	offset
+) => {
+	const query = {
+		text: `
+		select 
+		clientes.usuario_id,
+		clientes.cliente_id,
+		clientes.cliente_nome, 
+		clientes.cliente_email
+		from usuarios join clientes on usuarios.usuario_id = clientes.usuario_id
+		where clientes.usuario_id = $1 and clientes.cliente_nome like '%'||$4||'%' and clientes.usuario_id = $1 or clientes.cliente_cpf like '%'||$4||'%' and clientes.usuario_id = $1 or clientes.cliente_email like '%'||$4||'%' and clientes.usuario_id = $1 
+		group by clientes.usuario_id , clientes.cliente_id , clientes.cliente_email 
+		limit $2 offset $3;
+		`,
+		values: [usuarioId, clientesPorPagina, offset, texto],
+	};
+	const result = await database.query(query);
+	return result.rows;
+};
+
+const buscarClientesSemCobrancasSemTexto = async (
+	usuarioId,
+	clientesPorPagina,
+	offset
+) => {
+	const query = {
+		text: `
+		select 
+		clientes.usuario_id,
+		clientes.cliente_id,
+		clientes.cliente_nome, 
+		clientes.cliente_email
+		from usuarios join clientes on usuarios.usuario_id = clientes.usuario_id
+		where clientes.usuario_id = $1
+		group by clientes.usuario_id , clientes.cliente_id , clientes.cliente_email 
+		limit $2 offset $3;
+		`,
+		values: [usuarioId, clientesPorPagina, offset],
+	};
+	const result = await database.query(query);
+	return result.rows;
+};
+
 const clienteIdInfo = async (usuarioId, clienteId) => {
 	const query = {
 		text: `select * from clientes where usuario_id = $1 and cliente_id = $2`,
@@ -105,4 +152,6 @@ module.exports = {
 	editarCliente,
 	buscarClientePorTexto,
 	buscarClientesSemTexto,
+	buscarClientesSemCobrancasPorTexto,
+	buscarClientesSemCobrancasSemTexto,
 };

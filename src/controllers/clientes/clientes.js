@@ -80,18 +80,35 @@ const buscarClientes = async (ctx) => {
 			clientesPorPagina,
 			offset
 		)
+
+		if ( dados.length === 0 ) {
+			dados =  await Clientes.buscarClientesSemCobrancasPorTexto(
+				usuarioId,
+				texto,
+				clientesPorPagina,
+				offset 
+			)
+		}
 	} else {
 		dados = await Clientes.buscarClientesSemTexto(
 			usuarioId,
 			clientesPorPagina,
 			offset
 		)
+
+		if ( dados.length === 0 ) {
+			dados =  await Clientes.buscarClientesSemCobrancasSemTexto(
+				usuarioId,
+				clientesPorPagina,
+				offset 
+			)
+		}
 	}
 
 	Checar.checagemStatus(dados);
-	
-	const result = await Format.formatarCliente(dados);
 
+	const result = await Format.formatarCliente(dados);
+	
 	const totalDeResultados = result.length;
 
 	const totalPaginas = Math.ceil(totalDeResultados / clientesPorPagina);
