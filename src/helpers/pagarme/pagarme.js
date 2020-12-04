@@ -4,8 +4,6 @@ const axios = require('axios').default;
 require('dotenv').config();
 const keyGenerator = require('keygenerator');
 
-const PagarmeException = require('../exceptions/exception');
-
 const gerarBoleto = async (clienteIdInfo, valorCobranca, vencimento) => {
 	const boletoInfo = [];
 	const referenceKey = keyGenerator.transaction_id();
@@ -98,9 +96,5 @@ const obterBoletosPelaPagarme = async (chavesDeReferencia) => {
 	}
 	return boletos;
 };
-
-// simularPagamento();
-
-// gerarBoleto(valorCobranca, clienteId, clienteNome, clienteCpf);
 
 module.exports = { gerarBoleto, obterBoletosPelaPagarme };
