@@ -37,7 +37,7 @@ const editarCliente = async (clienteId, usuarioId, nome, email, tel) => {
 
 const buscarClientesPorTexto = async (
 	usuarioId,
-	texto,
+	busca,
 	clientesPorPagina,
 	offset
 ) => {
@@ -58,7 +58,7 @@ const buscarClientesPorTexto = async (
 		group by clientes.usuario_id ,clientes.cliente_id, clientes.cliente_nome, clientes.cliente_email
 		LIMIT $2 offset $3
 		`,
-		values: [usuarioId, clientesPorPagina, offset, texto],
+		values: [usuarioId, clientesPorPagina, offset, busca],
 	};
 	const result = await database.query(query);
 	return result.rows;

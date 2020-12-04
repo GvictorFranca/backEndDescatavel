@@ -62,7 +62,7 @@ const editarCliente = async (ctx) => {
 };
 
 const buscarClientes = async (ctx) => {
-	const { texto = null, clientesPorPagina = null, offset = null } = ctx.query;
+	const { busca = null, clientesPorPagina = null, offset = null } = ctx.query;
 
 	if (clientesPorPagina === null || offset === null) {
 		return response.responseCamposNulos(ctx,400,'Algum campo nao foi passado');
@@ -72,7 +72,7 @@ const buscarClientes = async (ctx) => {
 
 	// eslint-disable-next-line no-unused-expressions
 	
-	if (texto === null ){
+	if (busca === null ){
 		dados = await Clientes.buscarClientesSemTexto(
 			usuarioId,
 			clientesPorPagina,
@@ -81,7 +81,7 @@ const buscarClientes = async (ctx) => {
 	} else {
 		dados = await Clientes.buscarClientesPorTexto(
 			usuarioId,
-			texto,
+			busca,
 			clientesPorPagina,
 			offset
 		)
