@@ -87,11 +87,8 @@ const buscarClientes = async (ctx) => {
 		)
 	}
 
-	console.log(dados);
 	Checar.checagemStatus(dados);
-
 	const result = await Format.formatarCliente(dados);
-	
 	const totalDeResultados = result.length;
 
 	const totalPaginas = Math.ceil(totalDeResultados / clientesPorPagina);

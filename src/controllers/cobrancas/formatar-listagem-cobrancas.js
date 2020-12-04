@@ -2,6 +2,19 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-undef */
 // eslint-disable-next-line no-unused-vars
+const formatStatus = (status) => {
+	switch (status) {
+	case 'paid': 
+		return 'PAGO'
+	case 'waiting_payment': 
+		return 'AGUARDANDO'
+	case 'overdue': 
+		return 'VENCIDO'
+	default: 
+		return 'AGUARDANDO';
+	}
+}
+
 const formatarListagemDeCobrancas = (dados) => {
 	const result = [];
 	// eslint-disable-next-line no-restricted-syntax
@@ -14,10 +27,11 @@ const formatarListagemDeCobrancas = (dados) => {
 			valor: dado.valor_cobranca,
 			vencimento: dado.vencimento,
 			linkDoBoleto: dado.link_boleto,
-			status:dado.status,
+			status: formatStatus(dado.status),
 		});
 	}
 	return result;
 };
+
 
 module.exports = { formatarListagemDeCobrancas };
