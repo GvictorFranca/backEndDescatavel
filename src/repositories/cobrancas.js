@@ -24,10 +24,11 @@ const criarCobranca = async (boleto, descricao, clienteId) => {
 	return result.rows.shift();
 };
 
-const listarCobrancas = async (cobrancasPorPagina, offset) => {
+const listarCobrancas = async (cobrancasPorPagina, offset, usuarioId) => {
 	const query = {
-		text: `SELECT * FROM cobrancas limit $1 offset $2`,
-		values: [cobrancasPorPagina, offset],
+		text: `select * from cobrancas join clientes on cobrancas.cliente_id = clientes.cliente_id join usuarios on usuarios.usuario_id = clientes.usuario_id 
+	where usuarios.usuario_id = $3 limit $1 offset $2`,
+		values: [cobrancasPorPagina, offset, usuarioId],
 	};
 
 	const result = await database.query(query);

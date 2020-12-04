@@ -1,23 +1,12 @@
-const responseCriandoCliente = (ctx, code, dados, deletado) => {
-	if (deletado === true) {
-		const status = 500;
-		ctx.status = code;
-		ctx.body = {
-			status,
-			menssagem: 'Este cliente esta deletdo',
-		};
-	} else {
-		const status = 201;
-		ctx.status = code;
-		ctx.body = {
-			status,
-			dados: {
-				id: dados,
-				dados,
-				deletado,
-			},
-		};
-	}
+const responseCriandoCliente = (ctx, code, dados) => {
+	const status = 201;
+	ctx.status = code;
+	ctx.body = {
+		status,
+		dados: {
+			id: dados,
+		},
+	};
 };
 
 const responseEditandoCliente = (ctx, code, dados) => {

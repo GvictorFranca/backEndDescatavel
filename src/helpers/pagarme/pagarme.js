@@ -6,8 +6,7 @@ const keyGenerator = require('keygenerator');
 
 const PagarmeException = require('../exceptions/exception');
 
-const gerarBoleto = async (clienteIdInfo, valorCobranca) => {
-	console.log(clienteIdInfo);
+const gerarBoleto = async (clienteIdInfo, valorCobranca, vencimento) => {
 	const boletoInfo = [];
 	const referenceKey = keyGenerator.transaction_id();
 	try {
@@ -16,6 +15,7 @@ const gerarBoleto = async (clienteIdInfo, valorCobranca) => {
 			{
 				reference_key: referenceKey,
 				amount: valorCobranca,
+				boleto_expiration_date: vencimento,
 				api_key: process.env.API_KEY,
 				payment_method: 'boleto',
 				customer: {

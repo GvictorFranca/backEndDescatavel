@@ -4,10 +4,7 @@
 /* eslint-disable no-plusplus */
 const formatarRelatorio = (dados) => {
 	const relatorio = [];
-	const saldoEmConta = dados.reduce(
-		(prevVal, elem) => prevVal + elem.valor_cobranca,
-		0
-	);
+
 	// eslint-disable-next-line no-restricted-syntax
 	// eslint-disable-next-line no-restricted-syntax
 	let estaInadimplente = false;
@@ -70,7 +67,13 @@ const formatarRelatorio = (dados) => {
 		if(relatorio[i].estaInadimplente === false )
 			clientesAdimplentes++;
 	}
-
+	
+	let saldoEmConta = 0;
+	for (let i = 0; i < relatorio.length; i++){
+		if(relatorio[i].status === 'paid'){
+			saldoEmConta += relatorio[i].valorCobranca
+		}
+	}
 	
 
 	relatorioFormatado.push({

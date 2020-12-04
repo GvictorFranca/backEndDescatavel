@@ -34,7 +34,6 @@ const criarCliente = async (ctx) => {
 		ctx,
 		200,
 		dados.cliente_id,
-		dados.isdeleted
 	);
 };
 
@@ -74,37 +73,21 @@ const buscarClientes = async (ctx) => {
 	// eslint-disable-next-line no-unused-expressions
 	
 	if (texto === null ){
-		dados = await Clientes.buscarClientePorTexto(
-			usuarioId,
-			texto,
-			clientesPorPagina,
-			offset
-		)
-
-		if ( dados.length === 0 ) {
-			dados =  await Clientes.buscarClientesSemCobrancasPorTexto(
-				usuarioId,
-				texto,
-				clientesPorPagina,
-				offset 
-			)
-		}
-	} else {
 		dados = await Clientes.buscarClientesSemTexto(
 			usuarioId,
 			clientesPorPagina,
 			offset
 		)
-
-		if ( dados.length === 0 ) {
-			dados =  await Clientes.buscarClientesSemCobrancasSemTexto(
-				usuarioId,
-				clientesPorPagina,
-				offset 
-			)
-		}
+	} else {
+		dados = await Clientes.buscarClientesPorTexto(
+			usuarioId,
+			texto,
+			clientesPorPagina,
+			offset
+		)
 	}
 
+	console.log(dados);
 	Checar.checagemStatus(dados);
 
 	const result = await Format.formatarCliente(dados);
@@ -127,3 +110,4 @@ module.exports = {
 	editarCliente,
 	buscarClientes,
 };
+
