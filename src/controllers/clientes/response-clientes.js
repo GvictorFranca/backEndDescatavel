@@ -37,21 +37,14 @@ const responseEditandoCliente = (ctx, code, dados) => {
 const responseBuscandoCliente = (ctx, code, result, offset, totalPaginas) => {
 	const status = code;
 	ctx.status = code;
-	if (result.length === 0) {
-		ctx.body = {
-			status,
-			menssagem: 'Não existem resultados para esta pesquisa',
-		};
-	} else {
-		ctx.body = {
-			status,
-			dados: {
-				paginaAtual: parseFloat(offset),
-				totalDePaginas: totalPaginas,
-				clientes: result,
-			},
-		};
-	}
+	ctx.body = {
+		status,
+		dados: {
+			paginaAtual: parseFloat(offset),
+			totalDePaginas: totalPaginas,
+			clientes: result,
+		},
+	};
 };
 
 const responseCamposNulos = (ctx, code, menssagem) => {
