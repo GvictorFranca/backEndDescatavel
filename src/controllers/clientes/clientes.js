@@ -72,17 +72,22 @@ const buscarClientes = async (ctx) => {
 	let dados;
 
 	// eslint-disable-next-line no-unused-expressions
-	texto ? dados = await Clientes.buscarClientePorTexto(
-		usuarioId,
-		texto,
-		clientesPorPagina,
-		offset
-	) : dados = await Clientes.buscarClientesSemTexto(
-		usuarioId,
-		clientesPorPagina,
-		offset
-	); 
 	
+	if (texto === null ){
+		dados = await Clientes.buscarClientePorTexto(
+			usuarioId,
+			texto,
+			clientesPorPagina,
+			offset
+		)
+	} else {
+		dados = await Clientes.buscarClientesSemTexto(
+			usuarioId,
+			clientesPorPagina,
+			offset
+		)
+	}
+
 	Checar.checagemStatus(dados);
 	
 	const result = await Format.formatarCliente(dados);
